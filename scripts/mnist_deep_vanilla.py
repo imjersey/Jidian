@@ -140,7 +140,7 @@ def main(_):
   # Build the graph for the deep net
   y_conv, keep_prob = deepnn(x, BATCHSIZE)
 
-#test
+
   with tf.name_scope('loss'):
     cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=y_,
                                                             logits=y_conv)
