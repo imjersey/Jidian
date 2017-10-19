@@ -5,11 +5,19 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 import sys
-sys.path.append("C:\\Users\\Administrator\\PycharmProjects")
+sys.path.append("/root/Gan/jidian/MLexperiments")
+sys.path.append("/root/Gan/jidian")
 import MLexperiments.classes
 from MLexperiments.classes import ReadAutoLabeledData
 import tensorflow as tf
 import MLexperiments.config.parameters
+
+import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1,2"
+
+
+
 FLAGS = None
 myDataSet = ReadAutoLabeledData.read_data_sets(one_hot=True, test_size = 0.1, validation_size = 0.1)
 

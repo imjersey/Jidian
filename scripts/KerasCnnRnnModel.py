@@ -5,11 +5,19 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 import sys
-sys.path.append("C:\\Users\\Administrator\\PycharmProjects")
+sys.path.append("/root/Gan/jidian/MLexperiments")
+sys.path.append("/root/Gan/jidian")
 import MLexperiments.classes
 from MLexperiments.classes import ReadAutoLabeledData
 import tensorflow as tf
 import MLexperiments.config.parameters
+from keras.layers import LSTM, Reshape
+
+import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3,4"
+
+
 FLAGS = None
 myDataSet = ReadAutoLabeledData.read_data_sets(one_hot=True, test_size = 0.1, validation_size = 0.1)
 
@@ -38,17 +46,20 @@ y_test_ohe = np.array([tran_y(y_test[i]) for i in range(len(y_test))])
 
 model = Sequential()
 model.add(
-    Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', input_shape=(MLexperiments.config.parameters.SAMPLE_LEN, MLexperiments.config.parameters.SAMPLE_HEIGHT, 1), activation='relu'))
+    Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='valid', input_shape=(MLexperiments.config.parameters.SAMPLE_LEN, MLexperiments.config.parameters.SAMPLE_HEIGHT, 1), activation='relu'))
 #model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.5))
-model.add(Conv2D(128, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu'))
+model.add(Conv2D(128, kernel_size=(3, 3), strides=(1, 1), padding='valid', activation='relu'))
 #model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.5))
-model.add(Conv2D(32, kernel_size=(1, 1), strides=(1, 1), padding='same', activation='relu'))
+model.add(Conv2D(32, kernel_size=(10, MLexperiments.config.parameters.SAMPLE_HEIGHT - 4), strides=(1, 1), padding='valid', activation='relu'))
 #model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.5))
+#model.add(Reshape())
+
+model.add(LSTM(128))
+
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(2, activation='softmax'))
