@@ -23,7 +23,6 @@ X_test = X_test.reshape(X_test.shape[0], MLexperiments.config.parameters.SAMPLE_
 #X_train /= 255
 #X_test /= 255
 
-
 # def tran_y(y):
 #     y_ohe = np.zeros(2)
 #     if y:
@@ -45,7 +44,7 @@ model.add(Dropout(0.5))
 model.add(Conv2D(128, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu'))
 #model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.5))
-model.add(Conv2D(256, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu'))
+model.add(Conv2D(32, kernel_size=(1, 1), strides=(1, 1), padding='same', activation='relu'))
 #model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.5))
 model.add(Flatten())
@@ -53,9 +52,7 @@ model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(2, activation='softmax'))
-
 model.compile(loss='categorical_crossentropy', optimizer='adagrad', metrics=['accuracy'])
-
 model.fit(X_train, y_train_ohe, validation_data=(X_test, y_test_ohe), epochs=20, batch_size=128)
 scores = model.evaluate(X_test, y_test_ohe, verbose=0)
 
