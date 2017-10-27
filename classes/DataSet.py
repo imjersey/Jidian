@@ -8,26 +8,37 @@ from numpy import *
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
-import os
 import gzip
 import os
 import numpy
 from six.moves import urllib
 from six.moves import xrange  # pylint: disable=redefined-builtin
-
+import os
+import sys
+pwd = os.getcwd()
+sys.path.append(pwd)
+sys.path.append(os.path.dirname(os.getcwd()))
+import MLexperiments.config.parameters
 
 class DataSet(object):
     def __init__(self, images, labels, fake_data=False, one_hot=False):
         """Construct a DataSet. one_hot arg is used only if fake_data is true."""
-
+        self._num_examples = images.shape[0]
         if fake_data:
-            self._num_examples = 10000
+            #self._num_examples = 10000
             self.one_hot = one_hot
+            # images = numpy.random.random((self._num_examples,\
+            #                               MLexperiments.config.parameters.SAMPLE_LEN * \
+            #                               MLexperiments.config.parameters.SAMPLE_HEIGHT))
+            #images = numpy.array(images)
+            images = numpy.random.random((images.shape[0],
+                                    images.shape[1] * images.shape[2]))
+            labels = numpy.random.random_integers(0, MLexperiments.config.parameters.OUTPUTNUM - 1,(len(labels)))
         else:
             assert images.shape[0] == labels.shape[0], (
                 'images.shape: %s labels.shape: %s' % (images.shape,
                                                        labels.shape))
-            self._num_examples = images.shape[0]
+            
 
             # Convert shape from [num examples, rows, columns, depth]
             # to [num examples, rows*columns] (assuming depth == 1)
