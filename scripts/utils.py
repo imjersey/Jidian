@@ -48,7 +48,6 @@ def balanced_subsample(x,y,subsample_size=1.0):
     print("number of each type (balanced):" )
     print(use_elems)
     
-    
     xs = []
     ys = []
 
@@ -70,7 +69,7 @@ def balanced_subsample(x,y,subsample_size=1.0):
     return xs,ys
 
 
-def read_data_sets(train_dir=None, fake_data=False, one_hot=False, test_size=0.1, validation_size = 0.1, augment = False,mode = 1, data_balance = False):
+def read_data_sets(train_dir=None, fake_data=False, one_hot=False, test_size=0.1, validation_size = 0.1, augment = False,mode = 0, data_balance = True):
     """
     mode: 1 => 3 human + rain: 1 means high only, 2 high + mid, 3 high+mid+low , 
       4=>6 man + rain + wind:      4 means high only, 5 high + mid, 6 high+mid+low , 
@@ -112,57 +111,76 @@ def read_data_sets(train_dir=None, fake_data=False, one_hot=False, test_size=0.1
     #rain_input2, rain_label2 = load_data('../data/DataSet_10x100_DSZRainiMidQty.mat',"DataSetDSZRain_Mqty")
     #rain_input3, rain_label3 = load_data('../data/DataSet_10x100_DSZRainiLowQty.mat',"DataSetDSZRain_Lqty")
     
+    #wushi
+    wushi_man_input,wushi_man_label = load_data('../data/DataSet_10x100_HumanWuShiHighQty.mat',"DataSetHuman_Hqty")
+    wushi_man_input2,wushi_man_label2 = load_data('../data/DataSet_10x100_HumanWuShiMidQty.mat',"DataSetHuman_Mqty")
+    wushi_man_input3, wushi_man_label3 = load_data('../data/DataSet_10x100_HumanWuShiLowQty.mat',"DataSetHuman_Lqty")
+    
+    wushi_car_input, wushi_car_label = load_data('../data/DataSet_10x100_CarWuShiHighQty.mat',"DataSetCar_Hqty")
+    wushi_car_input2, wushi_car_label2 = load_data('../data/DataSet_10x100_CarWuShiMidQty.mat',"DataSetCar_Mqty")
+    wushi_car_input3, wushi_car_label3 = load_data('../data/DataSet_10x100_CarWuShiLowQty.mat',"DataSetCar_Lqty")
+    
+    #import pdb;pdb.set_trace()
+    
+    
     
     #np_input, labelData = np.concatenate((man_input3, rain_input3)), np.concatenate((man_label3, rain_label3))
-    np_input, labelData = rain_input, rain_label
-    
-#     if mode ==1:
-#         np_input, labelData = np.concatenate((man_input, rain_input)), np.concatenate((man_label, rain_label))
-#     else if mode == 2:
-#         np_input, labelData = np.concatenate((man_input, rain_input,man_input2, rain_input2)), np.concatenate((man_label, rain_label,man_label2, rain_label2))
-#     else if mode == 3:
-#         np_input, labelData = np.concatenate((man_input, rain_input,man_input2, rain_input2,man_input3, rain_input3)), np.concatenate((man_label, rain_label,man_label2, rain_label2,man_label3, rain_label3))
-#     else if mode == 4:
-        
-#     else if mode == 5:
-        
-#     else if mode == 6:
-
-#     else if mode == 5:
-        
-#     else if mode == 6:
-
-#     else if mode == 7:
+    #np_input, labelData = wushi_man_input, wushi_man_label
+    if mode == 1:
+        np_input, labelData = np.concatenate((man_input, rain_input)), np.concatenate((man_label, rain_label))
+    elif mode == 2:
+        np_input, labelData = np.concatenate((man_input, rain_input,man_input2, rain_input2)), np.concatenate((man_label, rain_label,man_label2, rain_label2))
+    elif mode == 3:
+        np_input, labelData = np.concatenate((man_input, rain_input,man_input2, rain_input2,man_input3, rain_input3)), np.concatenate((man_label, rain_label,man_label2, rain_label2,man_label3, rain_label3))
+    elif mode == 4:
+        pass
+    elif mode == 5:
+        pass
+    elif mode == 6:
+        pass
+    elif mode == 5:
+        pass
+    elif mode == 6:
+        pass
+    elif mode == 7:
         #no transfer, bad
-        #np_input, labelData = np.concatenate((qinshang_man_input)), np.concatenate((qinshang_man_label))
-#     else if mode == 8:
-        
-#     else if mode == 9:
+        print("loading mode = 7(qinshang_man for testing)")
+        np_input, labelData = qinshang_man_input,qinshang_man_label
+    elif mode == 8:
+        print("loading mode = 8(wushi_man_input for testing)")
+        np_input, labelData = wushi_man_input, wushi_man_label
+    elif mode == 9:
+        print("loading mode = 9(man and car in wushi for training)")
+        np_input, labelData = np.concatenate((wushi_man_input, wushi_car_input,wushi_man_input2, wushi_car_input2)), np.concatenate((wushi_man_label, wushi_car_label,wushi_man_label2, wushi_car_label2))
+    elif mode == 10:
+        print("loading mode = 10(np_input, labelData = wushi_man_input, wushi_man_label)")
+        np_input, labelData = wushi_man_input, wushi_man_label
+    
+#     elif mode == 11:
 
-#     else if mode == 10:
+#     elif mode == 12:
         
-#     else if mode == 11:
+#     elif mode == 13:
+        
+#     elif mode == 14:
 
-#     else if mode == 12:
+#     elif mode == 15:
         
-#     else if mode == 13:
-        
-#     else if mode == 14:
+#     elif mode == 16:
 
-#     else if mode == 15:
+#     elif mode == 17:
         
-#     else if mode == 16:
+#     elif mode == 18:
+        
+#     elif mode == 19:
 
-#     else if mode == 17:
+#     elif mode == 20:
         
-#     else if mode == 18:
-        
-#     else if mode == 19:
+#     elif mode == 21:
 
-#     else if mode == 20:
-        
-#     else if mode == 21:
-        
+    else:
+        print("loading mode = 3(default)")
+        np_input, labelData = np.concatenate((man_input, rain_input,man_input2, rain_input2,man_input3, rain_input3)),np.concatenate((man_label,rain_label,man_label2, rain_label2,man_label3, rain_label3))
         
     if data_balance:
         np_input , labelData = balanced_subsample(np_input,labelData,subsample_size=1.0)
