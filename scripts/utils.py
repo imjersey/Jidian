@@ -156,8 +156,9 @@ def read_data_sets(train_dir=None, fake_data=False, one_hot=False, test_size=0.1
         print("loading mode = 10(np_input, labelData = wushi_man_input, wushi_man_label)")
         np_input, labelData = wushi_man_input, wushi_man_label
     
-#     elif mode == 11:
-
+    elif mode == 11:
+        print("loading mode = 11(np_input, labelData = np.concatenate((qinshang_man_input, rain_input,qinshang_man_input2, rain_input2,qinshang_man_input3, rain_input3)), np.concatenate((qinshang_man_label, rain_label,qinshang_man_label2, rain_label2,qinshang_man_label3, rain_label3))")
+        np_input, labelData = np.concatenate((qinshang_man_input, rain_input,qinshang_man_input2, rain_input2,qinshang_man_input3, rain_input3)), np.concatenate((qinshang_man_label, rain_label,qinshang_man_label2, rain_label2,qinshang_man_label3, rain_label3))
 #     elif mode == 12:
         
 #     elif mode == 13:
